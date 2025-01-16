@@ -10,42 +10,39 @@ on:
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Make
-        run: sudo apt-get install -y make
-
-      - name: Run setup
+      - name: Install dependencies
         run: make setup
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: setup
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Make
-        run: sudo apt-get install -y make
+      - name: Install dependencies
+        run: make setup
 
       - name: Run tests
         run: make test
 
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: test
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Make
-        run: sudo apt-get install -y make
+      - name: Install dependencies
+        run: make setup
 
       - name: Run lint
         run: make lint
