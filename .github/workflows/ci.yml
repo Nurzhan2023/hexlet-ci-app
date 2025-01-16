@@ -1,0 +1,53 @@
+name: CI Workflow
+
+on:
+        push:
+                branches:
+                        - main
+        pull_request:
+                branches:
+                        -main
+jobs:
+        setup:
+                runs-on: ubuntu-latest
+
+                steps:
+                        -name: Checkout code
+                         uses: action/checout@v4
+
+                        -name: Set up Make
+                         run: sudo apt-get install make
+
+                        -name: Run setup
+                         run: make setup
+        test:
+                runs-on: ubuntu-latest
+                needs: setup
+
+
+                steps:
+                        -name: Checkout code
+                         uses: actions/checkout@v4
+
+                        -name: Set up Make
+                         run: sudo apt-get install make
+
+                        -name: Run tests
+                         run: make test
+
+
+
+        lint:
+                runs-on: ubuntu-latest
+                needs: test
+
+
+                steps: 
+                        - name: Checkout code
+                          uses: actions/chekout@v4
+
+                        - name: Set up Make
+                          run: sudo apt-get install make
+
+                        - name: Run lint
+                          run: make lint  
