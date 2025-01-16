@@ -1,53 +1,51 @@
 name: CI Workflow
 
 on:
-        push:
-                branches:
-                        - main
-        pull_request:
-                branches:
-                        -main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
-        setup:
-                runs-on: ubuntu-latest
+  setup:
+    runs-on: ubuntu-latest
 
-                steps:
-                        -name: Checkout code
-                         uses: action/checout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-                        -name: Set up Make
-                         run: sudo apt-get install make
+      - name: Set up Make
+        run: sudo apt-get install -y make
 
-                        -name: Run setup
-                         run: make setup
-        test:
-                runs-on: ubuntu-latest
-                needs: setup
+      - name: Run setup
+        run: make setup
 
+  test:
+    runs-on: ubuntu-latest
+    needs: setup
 
-                steps:
-                        -name: Checkout code
-                         uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-                        -name: Set up Make
-                         run: sudo apt-get install make
+      - name: Set up Make
+        run: sudo apt-get install -y make
 
-                        -name: Run tests
-                         run: make test
+      - name: Run tests
+        run: make test
 
+  lint:
+    runs-on: ubuntu-latest
+    needs: test
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-        lint:
-                runs-on: ubuntu-latest
-                needs: test
+      - name: Set up Make
+        run: sudo apt-get install -y make
 
-
-                steps: 
-                        - name: Checkout code
-                          uses: actions/chekout@v4
-
-                        - name: Set up Make
-                          run: sudo apt-get install make
-
-                        - name: Run lint
-                          run: make lint  
+      - name: Run lint
+        run: make lint
