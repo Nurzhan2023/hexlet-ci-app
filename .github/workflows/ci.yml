@@ -16,8 +16,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+                node-version: '16'
+
       - name: Install dependencies
-        run: make setup
+        run: npm install
 
   test:
     runs-on: ubuntu-22.04
@@ -27,11 +32,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-nade@v3
+        with:
+                node-version: '16'
+
       - name: Install dependencies
-        run: make setup
+        run: npm install
 
       - name: Run tests
-        run: make test
+        run: npm test
 
   lint:
     runs-on: ubuntu-22.04
@@ -41,8 +51,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+                node-version: '16'
+
       - name: Install dependencies
-        run: make setup
+        run: npm install
 
       - name: Run lint
-        run: make lint
+        run: npm run lint
